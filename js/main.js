@@ -2,23 +2,47 @@ const calculator = {
   currentInput: '',
   operator: null,
   previousInput: '',
+  calculatedResult: false,
 
   inputNumber(num) {
-    // logic for appending number
+    // logic for appending number and displaying it in the browser
+    if (num === '.') {
+      // don't allow multiple decimals
+      if (this.currentInput.includes('.')) return;
+
+      // if input is empty, start with "0."
+      if (this.currentInput === '') {
+        this.currentInput = '0.';
+        // display it and return early
+        document.querySelector('#screen').innerText = this.currentInput;
+        return;
+      }
+    }
+
+    if(this.calculatedResult){
+      this.currentInput = ''
+      this.calculatedResult = false
+    } 
     this.currentInput += num
     console.log("current input", this.currentInput)
     document.querySelector('#screen').innerText = this.currentInput
+    
   },
 
   inputOperator(op) {
+    if(this.currentInput === ''){
+      return
+    }
     this.operator = op
     this.previousInput = this.currentInput
     this.currentInput = ''
     console.log("previous input", this.previousInput)
+    this.calculatedResult = false; // Allow continued input
   },
 
   calculate() {
     // logic for computing result
+    let result = 0
     if(this.operator === '+'){
       result = Number(this.currentInput) + Number(this.previousInput)
       console.log(result)
@@ -29,9 +53,14 @@ const calculator = {
       result = Number(this.currentInput) * Number(this.previousInput)
       console.log(result)
     } else if(this.operator === '/'){
-      result = Number(this.previousInput) / Number(this.currentInput)
+      if(this.currentInput === '0'){
+        alert('Cannot divide by zero!')
+      } else {
+        result = Number(this.previousInput) / Number(this.currentInput)
+      }
       console.log(result)
     }
+    this.calculatedResult = true
     this.currentInput = `${result}`
     document.querySelector('#screen').innerText = result
   },
@@ -45,9 +74,9 @@ const calculator = {
 }
 
 
-document.querySelectorAll('button').forEach(btn => btn.addEventListener('click', () => fillStack(btn.innerText)))
+document.querySelectorAll('button').forEach(btn => btn.addEventListener('click', () => calc(btn.innerText)))
 // console.log(btnArr)
-function fillStack(btn){
+function calc(btn){
   console.log(btn)
   if(btn === '+' || btn === '/' || btn === 'x' || btn === '-'){
     calculator.inputOperator(btn)
