@@ -49,3 +49,10 @@ main {
   align-items: center;
   padding-bottom: 4px;
 }
+
+.output {
+  text-align: right;
+  font-size: 45px;
+  padding-right: 20px;
+  padding-top: 18px;
+}
