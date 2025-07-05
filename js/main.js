@@ -26,7 +26,6 @@ const calculator = {
     this.currentInput += num
     console.log("current input", this.currentInput)
     document.querySelector('#screen').innerText = this.currentInput
-    
   },
 
   inputOperator(op) {
