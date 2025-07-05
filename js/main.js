@@ -24,7 +24,6 @@ const calculator = {
       this.calculatedResult = false
     } 
     this.currentInput += num
-    console.log("current input", this.currentInput)
     document.querySelector('#screen').innerText = this.currentInput
   },
 
@@ -35,7 +34,6 @@ const calculator = {
     this.operator = op
     this.previousInput = this.currentInput
     this.currentInput = ''
-    console.log("previous input", this.previousInput)
     this.calculatedResult = false; // Allow continued input
   },
 
@@ -44,20 +42,16 @@ const calculator = {
     let result = 0
     if(this.operator === '+'){
       result = Number(this.currentInput) + Number(this.previousInput)
-      console.log(result)
     } else if(this.operator === '-'){
       result = Number(this.previousInput) - Number(this.currentInput)
-      console.log(result)
     } else if(this.operator === 'x'){
       result = Number(this.currentInput) * Number(this.previousInput)
-      console.log(result)
     } else if(this.operator === '/'){
       if(this.currentInput === '0'){
         alert('Cannot divide by zero!')
       } else {
         result = Number(this.previousInput) / Number(this.currentInput)
       }
-      console.log(result)
     }
     this.calculatedResult = true
     this.currentInput = `${result}`
@@ -74,9 +68,8 @@ const calculator = {
 
 
 document.querySelectorAll('button').forEach(btn => btn.addEventListener('click', () => calc(btn.innerText)))
-// console.log(btnArr)
+
 function calc(btn){
-  console.log(btn)
   if(btn === '+' || btn === '/' || btn === 'x' || btn === '-'){
     calculator.inputOperator(btn)
   } else if(btn === '='){
